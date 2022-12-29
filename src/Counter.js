@@ -1,33 +1,36 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, incrementByAmount } from './features/counterSlice'
 
 function Counter() {
-    //Call useSelector to grab current value of our state variable from store, and assign it to a variable named 'count'
-    const count = useSelector(state => state.value)
-    // Include the useDispatch hook
+    const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
-    const [ input, setInput ] = useState(0)
+    const [input, setInput] = useState(0)
 
-    const byAmountSubmit = e => {
+    const byAmount = (e) => {
         e.preventDefault()
-        console.log(input)
-        dispatch(incrementByAmount(+input))
+        dispatch(incrementByAmount(Number(input)))
     }
 
     return (
-        <>
-            <h1>Counter</h1>
-            <h2>{count}</h2>
-            <button onClick={()=> dispatch(increment())}>Increment</button>
-            <button onClick={()=> dispatch(decrement())}>Decrement</button>
-            <form onSubmit={e => byAmountSubmit(e)}>
-                <input type='number' onChange={e => setInput(e.target.value)}/>
-                <button type='submit'>Submit</button>
+        <div>
+            <h1>{count}</h1>
+            <button
+                aria-label="Increment value"
+                onClick={() => dispatch(increment())}>
+                Increment
+            </button>
+            <button
+                aria-label="Decrement value"
+                onClick={() => dispatch(decrement())}>
+                Decrement
+            </button>
+            <form onSubmit={(e) => byAmount(e)}>
+                <input type="number" onChange={(e) => setInput(e.target.value)} />
+                <button type="submit">Submit</button>
             </form>
-
-        </>
+        </div>
     )
 }
 
-export default Counter 
+export default Counter
